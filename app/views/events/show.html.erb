@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-center">
+  <div class="card text-center ms-2 me-2" style="width: 18rem;">
+    <div class="card-body">
+      <h4 class="card-title"><%= @event.location %></h5>
+      <h5 class="card-subtitle mb-2 text-muted">Date: <%= @event.date %></h6>
+      <div class="card-text">
+        <p>Some quick example text to build on the card title and   make up the bulk of the card's content.</p>
+        <h5>Attendee List</h5>
+        <% @event.attendees.each do | attendee | %>
+          <h6><%= attendee.email %></h6>
+        <% end %>
+      </div>
+      <%= link_to "Register", attend_event_path, class:"btn btn-primary" %>
+    </div>
+  </div>
+</div>
