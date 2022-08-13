@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   get '/users/:id', to: 'users#show'
   resources :events do
     member do
-      get 'attend'
+      post 'attend'
+      post 'unattend'
     end
   end 
   # Defines the root path route ("/")

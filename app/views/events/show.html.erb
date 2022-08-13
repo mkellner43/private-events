@@ -1,16 +1,23 @@
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center mt-5">
   <div class="card text-center ms-2 me-2" style="width: 18rem;">
     <div class="card-body">
-      <h4 class="card-title"><%= @event.location %></h5>
-      <h5 class="card-subtitle mb-2 text-muted">Date: <%= @event.date %></h6>
+      <h4 class="card-title"><%= @event.location %></h4>
+      <h5 class="card-subtitle mb-2 text-muted"><%= @event.date.to_fs(:long) %></h5>
+      <h5 class="card-subtitle mb-2 text-muted"><%= @event.time.to_fs(:time) %></h5>
       <div class="card-text">
-        <p>Some quick example text to build on the card title and   make up the bulk of the card's content.</p>
+        <p><%= @event.details %></p>
         <h5>Attendee List</h5>
         <% @event.attendees.each do | attendee | %>
           <h6><%= attendee.email %></h6>
         <% end %>
       </div>
-      <%= link_to "Register", attend_event_path, class:"btn btn-primary" %>
+      <% if @event.attendees.include?(current_user) %>
+        <%= button_to "Unregister", unattend_event_path, class:"btn btn-warning mb-2" %>
+      <% else %>
+        <%= button_to "Register", attend_event_path, class:"btn btn-primary mb-2" %>
+      <% end %>
+      <%= link_to "Edit", edit_event_path, class: "btn btn-secondary" %>
+      <%= link_to "Delete", event_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this event?" }, class: "btn btn-danger" %>
     </div>
   </div>
 </div>
