@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 before_action :authenticate_user!, :except => [:index]
-before_action :is_creator, :except => [:index, :show ]
+before_action :is_creator, :except => [:index, :show, :attend, :unattend, :new ]
   def index
     @events = Event.all
   end
