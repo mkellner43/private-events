@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
-
+before_action :authenticate_user!, :except => [:index]
+before_action :is_creator, :except => [:index, :show ]
   def index
     @events = Event.all
   end
@@ -18,11 +19,11 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = current_user.events.find(params[:id])
+    @event = Event.find(params[:id])
   end
 
   def edit
-    @event = current_user.events.find(params[:id])
+    @event = Event.find(params[:id])
   end
 
   def update
@@ -60,4 +61,10 @@ class EventsController < ApplicationController
   def event_params
     params.require(:event).permit(:date, :time, :location, :details)
   end
+
+  def is_creator
+    unless Event.find(params[:id]).creator_id == current_user.id
+      redirect_to root_path, alert: "Unauthorized user"
+    end 
+  end 
 end
